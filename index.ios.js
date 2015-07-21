@@ -10,44 +10,107 @@ var {
   StyleSheet,
   Text,
   View,
+  Image,
 } = React;
 
-var reactNativeOne = React.createClass({
-  render: function() {
+var MOCKED_MOVIES_DATA = [
+  {
+    title: 'Title',
+    year: '2015',
+    posters: {
+      thumbnail: 'http://i.imgur.com/UePbdph.jpg'
+    }
+  }
+];
+
+var REQUEST_URL = 'https://raw.githubusercontent.com/facebook/react-native/master/docs/MoviesExample.json';
+
+class reactNativeOne extends React.Component {
+
+  constructor() {
+    super();
+    this.state = {
+      movies: null
+    };
+  }
+
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  fetchData() {
+    fetch(REQUEST_URL)
+      .then((response) => response.json())
+      .then((responseData) => {
+        this.setState({
+          movies: responseData.movies
+        });
+      })
+      .done();
+  }
+
+  renderLoadingView() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
+      <View style={ styles.container }>
+        <Text>
+          Loading movies ...
         </Text>
       </View>
     );
   }
-});
+
+  renderMovie(movie) {
+
+    return (
+      <View style={ styles.container }>
+        <Image source={{ uri: movie.posters.thumbnail }}
+          style={ styles.thumbnail } />
+
+        <View style={ styles.rightContainer }>
+          <Text style={ styles.title }>{ movie.title }</Text>
+          <Text style={ styles.year }>{ movie.year }</Text>
+        </View>
+      </View>
+    );
+
+  }
+
+  render() {
+
+    if ( !this.state.movies ) {
+      return this.renderLoadingView();
+    }
+
+    let movie = this.state.movies[0];
+    return this.renderMovie(movie);
+
+  }
+
+}
 
 var styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  welcome: {
+  thumbnail: {
+    width: 53,
+    height: 81
+  },
+  rightContainer: {
+    flex: 1,
+  },
+  title: {
     fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+    marginBottom: 8,
+    textAlign: 'center'
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+  year: {
+    textAlign: 'center'
+  }
 });
 
 AppRegistry.registerComponent('reactNativeOne', () => reactNativeOne);
