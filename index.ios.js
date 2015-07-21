@@ -11,44 +11,55 @@ var {
   Text,
   View,
   Image,
+  ListView
 } = React;
-
-var MOCKED_MOVIES_DATA = [
-  {
-    title: 'Title',
-    year: '2015',
-    posters: {
-      thumbnail: 'http://i.imgur.com/UePbdph.jpg'
-    }
-  }
-];
 
 var REQUEST_URL = 'https://raw.githubusercontent.com/facebook/react-native/master/docs/MoviesExample.json';
 
 class reactNativeOne extends React.Component {
 
+	/**
+	 * initialize states. (`getInitialState` equivalent?)
+	 *
+	 * create `this.state.dataSource` to hold api response data in a ListView object
+	 */
   constructor() {
     super();
     this.state = {
-      movies: null
+   		loaded: false,
+   		dataSource: new ListView.DataSource({
+   			rowHasChanged: (row1, row2) => row1 !== row2
+   		})
     };
   }
 
+  /**
+   * get data from api once the component has been loaded
+   */
   componentDidMount() {
     this.fetchData();
   }
 
+  /**
+   * get data from api server and store it in `this.state.dataSource`
+   * also set `loaded` flag to be TRUE so we can test in `render()` method
+   * if the component has already got the data
+   */
   fetchData() {
     fetch(REQUEST_URL)
       .then((response) => response.json())
       .then((responseData) => {
         this.setState({
-          movies: responseData.movies
+        	loaded: true,
+        	dataSource: this.state.dataSource.cloneWithRows(responseData.movies)
         });
       })
       .done();
   }
 
+  /**
+   * render loading view (shown before the component got data from api server)
+   */
   renderLoadingView() {
     return (
       <View style={ styles.container }>
@@ -59,8 +70,11 @@ class reactNativeOne extends React.Component {
     );
   }
 
+  /**
+   * render a single view of movie element
+   * @param  {object} movie
+   */
   renderMovie(movie) {
-
     return (
       <View style={ styles.container }>
         <Image source={{ uri: movie.posters.thumbnail }}
@@ -72,17 +86,24 @@ class reactNativeOne extends React.Component {
         </View>
       </View>
     );
-
   }
 
+  /**
+   * render the component in ListView
+   */
   render() {
 
-    if ( !this.state.movies ) {
+    if ( !this.state.loaded ) {
       return this.renderLoadingView();
     }
 
-    let movie = this.state.movies[0];
-    return this.renderMovie(movie);
+    return (
+    	<ListView
+    		dataSource={ this.state.dataSource }
+    		renderRow={ this.renderMovie }
+    		style={ styles.listView }
+  		/>
+    );
 
   }
 
@@ -110,6 +131,10 @@ var styles = StyleSheet.create({
   },
   year: {
     textAlign: 'center'
+  },
+  listView: {
+  	paddingTop: 20,
+  	backgroundColor: '#f5fcff'
   }
 });
 
