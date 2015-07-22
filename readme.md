@@ -10,6 +10,7 @@ The code in tutorial uses both ES5 and ES6 syntax. I change them a bit to use ES
 
 - The official docs uses [io.js](https://iojs.org) but it works with Node also. I was using node to follow the tutorial, no problems found.
 - [React Native: Up and Running](https://egghead.io/lessons/react-react-native-up-and-running) free video on egghead.io is a pretty good companion video to the tutorial.
+- I'm impressed with toolings React Native provides: Fast to get feedback when updating some code, can use Chrome Devtools to debug. 👍🏼
 
 ### Destructuring
 
