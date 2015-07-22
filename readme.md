@@ -2,7 +2,7 @@
 
 Learning React Native in ES6. https://facebook.github.io/react-native/docs/tutorial.html
 
-> I have very little experience with React before start doing this. I knew some basic concepts of components, states, and the `render()` function but never really make any apps with React yet.
+> I have very little experience with React and zero experience with React Native before start doing this. I knew some basic concepts of components, states, and the `render()` function but never really make any apps with React yet.
 
 The code in tutorial uses both ES5 and ES6 syntax. I change them a bit to use ES6 as much as I can.
 
@@ -133,5 +133,4 @@ function (responseData) {
 - As far as I understand, `render()` method is called whenver component's `state` is changed.
 - So once the component is initialized (in this tutorial), `render()` → `fetchData()` → fetchData got back response data and trigger `state` changes → `render()` is called again.
 
-- I'm still not sure if I like putting all styles in `StyleSheet.create` object or not.
-- Also the fact that I have to explicitly put inline `style` attribute to almost every UI elements is quite different that what we normally do with CSS. Maybe it's just old habit dies hard ಠ_ಠ.
+- I'm still not sure if I like putting all styles in `StyleSheet.create` object or not. Syntax in the object is OK but the fact that I have to explicitly put inline `style` attribute to almost every UI elements is quite different that what we normally do with CSS. Maybe it's just old habit dies hard ಠ_ಠ.
