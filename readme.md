@@ -133,5 +133,9 @@ function (responseData) {
 - As far as I understand, `render()` method is called whenver component's `state` is changed.
 - So once the component is initialized (in this tutorial), `render()` → `fetchData()` → fetchData got back response data and trigger `state` changes → `render()` is called again.
 
+### Styles
+
 - I'm still not sure if I like putting all styles in `StyleSheet.create` object or not.
-- Also the fact that I have to explicitly put inline `style` attribute to almost every UI elements is quite different that what we normally do with CSS. Maybe it's just old habit dies hard ಠ_ಠ.
+- Also the fact that I have to explicitly put inline `style` attribute to almost every UI elements is quite different that what we normally do with CSS.
+- A component can accept multiple styles by passing array of styles to it: `style={[styles.base, styles.background]}`
+- Since styles in React Native are objects, they can be dynamic and can be passed around.
