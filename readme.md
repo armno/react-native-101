@@ -140,3 +140,14 @@ function (responseData) {
 - Also the fact that I have to explicitly put inline `style` attribute to almost every UI elements is quite different that what we normally do with CSS.
 - A component can accept multiple styles by passing array of styles to it: `style={[styles.base, styles.background]}`
 - Since styles in React Native are objects, they can be dynamic and can be passed around.
+
+-----
+
+### `NavigatorIOS`
+
+The code is at: https://github.com/armno/react-native-101/tree/01-routing
+
+- `NavigatorIOS` is a component for creating navigation & routing system.
+- It takes `initialRoute` object property to tell what component to use as a default route (first page).
+- `Main` component is created in a separated module (CommonJS module) and is imported in main `index.io.js` file (with relative path).
+- Data can be passed to `Main` component with `passProps` object. It will become `this.props` in `Main` component.
