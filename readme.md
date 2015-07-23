@@ -151,3 +151,9 @@ The code is at: https://github.com/armno/react-native-101/tree/01-routing
 - It takes `initialRoute` object property to tell what component to use as a default route (first page).
 - `Main` component is created in a separated module (CommonJS module) and is imported in main `index.io.js` file (with relative path).
 - Data can be passed to `Main` component with `passProps` object. It will become `this.props` in `Main` component.
+
+### Input fields
+
+- `TextInput` = input field. `TouchableHighlight` = button
+- `TouchableHighlight` uses `onPress`.
+- We can't put `textTransform: 'uppercase'` in styles object. See [react-native/2088](https://github.com/facebook/react-native/issues/2088)
