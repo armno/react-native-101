@@ -1,6 +1,6 @@
 # react-native-101
 
-Learning React Native in ES6. https://facebook.github.io/react-native/docs/tutorial.html
+Learning React Native in ES6. https://facebook.github.io/react-native/docs/tutorial.html and the course [React Native Fundamentals](https://egghead.io/series/react-native-fundamentals) on egghead.io.
 
 > I have very little experience with React and zero experience with React Native before start doing this. I knew some basic concepts of components, states, and the `render()` function but never really make any apps with React yet.
 
@@ -128,6 +128,7 @@ function (responseData) {
 - [fetch](https://fetch.spec.whatwg.org/) is the new (and still in-progress) API to get remote resources from a URL with simpler API than XHR. Hopefully it will replace XHR in the future.
 - React uses fetch by default.
 - `componentDidMount()` method is where we put initial `fetchData()` method call in. `fetchData()` then stores retrieved data in component's state object.
+- `.then((res) => res.json())` to get actual response data in JSON format (first thing to do, maybe?)
 
 ### `render()`
 
@@ -140,12 +141,11 @@ function (responseData) {
 - Also the fact that I have to explicitly put inline `style` attribute to almost every UI elements is quite different that what we normally do with CSS.
 - A component can accept multiple styles by passing array of styles to it: `style={[styles.base, styles.background]}`
 - Since styles in React Native are objects, they can be dynamic and can be passed around.
+- We can't put `textTransform: 'uppercase'` in styles object. See [react-native/2088](https://github.com/facebook/react-native/issues/2088)
 
 -----
 
 ### `NavigatorIOS`
-
-The code is at: https://github.com/armno/react-native-101/tree/01-routing
 
 - `NavigatorIOS` is a component for creating navigation & routing system.
 - It takes `initialRoute` object property to tell what component to use as a default route (first page).
@@ -156,4 +156,80 @@ The code is at: https://github.com/armno/react-native-101/tree/01-routing
 
 - `TextInput` = input field. `TouchableHighlight` = button
 - `TouchableHighlight` uses `onPress`.
-- We can't put `textTransform: 'uppercase'` in styles object. See [react-native/2088](https://github.com/facebook/react-native/issues/2088)
+- `underlayColor` property of `TouchableHighlight` = the color when press on the button.
+
+### ActivityIndicatorIOS (loading spinner)
+
+- We can use component's state variable to control on when to display the loading spinner `animating={ this.state.isLoading }`.
+
+-----
+
+### Navigating between pages
+
+- After creating few components (and some nested components), it's becoming more clear to me to think about things as components.
+- I usually forget `module.exports` in component file.
+
+- To me, `<NavigatorIOS>` is like a root-level `<ui-view>` in angular-ui-router world.
+- To go to another state:
+
+```javascript
+this.props.navigator.push({
+	title: 'Title of the next view',
+	component: Profile // main component of the next view
+	passProps: {} // properties to pass to the next view
+})
+```
+
+- This means we have to create `Profile` component and import into this main component first. (of course!)
+- `passProps` is an object with data that we want to pass to `Profile` component. This object will become `this.props` in `Profile` component automatically.
+- Unlike using `navigator`, we pass data object to a sub-component using properties. See https://github.com/armno/react-native-101/blob/master/App/Profile/Profile.js#L22.
+
+#### `propTypes`
+
+- `propTypes` object is for defining what are the component's properies (attributes?), This is a [React thing](https://facebook.github.io/react/docs/reusable-components.html). Basically to make sure this component will be used correctly: correct types and meet some validations.
+- `Badge` component is created at https://github.com/armno/react-native-101/blob/master/App/Badge/Badge.js.
+- `React.PropTypes.object.isRequired` = the prop should be an object and it is required.
+- Putting `propTypes` definition as class properties (in `constructor()`) seems to work too. **BUT that's not what we want to do**.
+
+### Aside: ES6 Class properties
+
+- I was wondering if I could put `propTypes` definition in the class itself.
+- It should be as easy as:
+
+```javascript
+class Nay extends Nom {
+	// property
+	this.name = 'Yay';
+
+	// method
+	render() {
+
+	}
+}
+
+// or
+class Nay extends Nom {
+	constructor() {
+		this.name = 'Yay';
+	}
+}
+```
+
+- **No.**
+- See: http://wiki.ecmascript.org/doku.php?id=strawman:maximally_minimal_classes
+	- "Class declarations/expressions create a constructor function/prototype pair exactly as for function declarations."
+- ES6 Classes don't create actual classes: they create prototype chains for you. (Remember what people say about sugar syntax?)
+- So what should be in a class definition are **only prototype methods**, as far as I understand.
+- (From the same URL above) "Class properties and prototype data properties need be created outside the declaration.".
+- So really the correct way to define `propTypes` is outside the `Nay` class definition.
+
+```javascript
+class Nay extends Nom {
+
+}
+
+Nay.name = 'Yay';
+```
+
+- This is my _very-aha_ moment.
+- (Maybe we will [see it in ES7](https://esdiscuss.org/topic/es7-property-initializers) though)

@@ -89,6 +89,7 @@ class Main extends React.Component {
 						}
 					});
 
+					// restore the default states
 					this.setState({
 						isLoading: false,
 						error: false,
@@ -120,7 +121,7 @@ class Main extends React.Component {
 				<ActivityIndicatorIOS
 					animating={ this.state.isLoading }
 					color="#111"
-					size="large">
+					size="small">
 				</ActivityIndicatorIOS>
 				{ showError }
 			</View>
