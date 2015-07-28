@@ -9,7 +9,7 @@ var {
 
 var styles = StyleSheet.create({
 	container: {
-		backgroundColor: '#48bbec',
+		backgroundColor: '#419fdd',
 		paddingBottom: 10
 	},
 	name: {
@@ -28,7 +28,7 @@ var styles = StyleSheet.create({
 		height: 125,
 		width: 125,
 		borderRadius: 65,
-		marginTop: 10,
+		marginTop: 15,
 		alignSelf: 'center'
 	}
 });
@@ -42,7 +42,7 @@ class Badge extends React.Component {
 				  style={styles.image}
 				  source={{uri: this.props.userInfo.avatar_url}} />
 				<Text	style={styles.name}>{this.props.userInfo.name}</Text>
-				<Text style={styles.handle}>{this.props.userInfo.login}</Text>
+				<Text style={styles.handle}>@{this.props.userInfo.login}</Text>
 			</View>
 		);
 	}
