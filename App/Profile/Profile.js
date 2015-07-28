@@ -1,5 +1,6 @@
 var React = require('react-native');
 var Badge = require('../Badge/Badge');
+var Seperator = require('../Separator/Separator');
 
 var {
 	View,
@@ -27,8 +28,10 @@ var styles = StyleSheet.create({
 });
 
 class Profile extends React.Component {
+
 	render() {
 		var fields = ['company', 'location', 'followers', 'following', 'email', 'bio', 'public_repos', 'blog'];
+
 		var list = fields.map((item, index) => {
 			if ( !this.props.userInfo[item] ) {
 				return <View key={ index } />
@@ -40,6 +43,7 @@ class Profile extends React.Component {
 						<Text style={ styles.rowTitle }>{ item.toUpperCase() }</Text>
 						<Text style={ styles.rowContent }>{ this.props.userInfo[item] }</Text>
 					</View>
+					<Seperator />
 				</View>
 			);
 		}, this);
@@ -52,5 +56,9 @@ class Profile extends React.Component {
 		)
 	}
 }
+
+Profile.propTypes = {
+	userInfo: React.PropTypes.object.isRequired
+};
 
 module.exports = Profile;
