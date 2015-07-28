@@ -1,12 +1,15 @@
 var React = require('react-native');
 var Profile = require('../Profile/Profile');
+var Api = require('../Utilities/Api');
+var Repositories = require('../Repositories/Repositories');
 
 var {
 	Text,
 	View,
 	StyleSheet,
 	Image,
-	TouchableHighlight
+	TouchableHighlight,
+	ActivityIndicatorIOS
 } = React;
 
 var styles = StyleSheet.create({
@@ -36,13 +39,27 @@ var styles = StyleSheet.create({
 	},
 	buttonNotes: {
 		backgroundColor: '#f39c12'
+	},
+	loading: {
+		alignSelf: 'center',
+		position: 'absolute',
+		top: 50,
+		left: 50,
+		backgroundColor: 'transparent'
 	}
 });
 
 class Dashboard extends React.Component {
 
+	constructor() {
+		super();
+
+		this.state = {
+			isLoading: false
+		};
+	}
+
 	goToProfile() {
-		console.log('go to profile');
 		this.props.navigator.push({
 			title: 'Profile Page',
 			component: Profile,
@@ -53,7 +70,25 @@ class Dashboard extends React.Component {
 	}
 
 	goToRepos() {
-		console.log('go to repo');
+
+		this.setState({
+			isLoading: true
+		});
+
+		Api.getRepos(this.props.userInfo.login)
+			.then((repos) => {
+				this.props.navigator.push({
+					component: Repositories,
+					title: 'Repositories',
+					passProps: {
+						repos: repos
+					}
+				});
+
+				this.setState({
+					isLoading: false
+				});
+			});
 	}
 
 	goToNotes() {
@@ -83,6 +118,13 @@ class Dashboard extends React.Component {
 					underlayColor='#f1c40f'>
 						<Text style={styles.buttonText}>View Notes</Text>
 				</TouchableHighlight>
+				<ActivityIndicatorIOS
+					style={ styles.loading }
+					animating={ this.state.isLoading }
+					hide={ !this.state.isLoading }
+					color="#111"
+					size="small">
+				</ActivityIndicatorIOS>
 			</View>
 		)
 	}

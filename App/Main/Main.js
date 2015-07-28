@@ -3,6 +3,7 @@
 var React = require('react-native');
 var Dashboard = require('../Dashboard/Dashboard');
 var Badge = require('../Badge/Badge');
+var Api = require('../Utilities/Api');
 
 var {
 	View,
@@ -70,9 +71,7 @@ class Main extends React.Component {
 		});
 
 		let username = this.state.username.trim();
-		let url = `https://api.github.com/users/${username}`;
-		fetch(url)
-			.then((res) => res.json())
+		Api.getUser(username)
 			.then((res) => {
 
 				if (res.message === 'Not Found') {

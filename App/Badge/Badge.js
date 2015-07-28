@@ -9,7 +9,7 @@ var {
 
 var styles = StyleSheet.create({
 	container: {
-		backgroundColor: '#419fdd',
+		backgroundColor: '#2c3e50',
 		paddingBottom: 10
 	},
 	name: {
