@@ -236,5 +236,6 @@ class Nay extends Nom {
 Nay.name = 'Yay';
 ```
 
+- It's the same reason why we don't want to set a variable to a function's (class') prototype.
 - This is my _very-aha_ moment.
 - (Maybe we will [see it in ES7](https://esdiscuss.org/topic/es7-property-initializers) though)
