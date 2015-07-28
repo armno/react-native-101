@@ -186,7 +186,7 @@ this.props.navigator.push({
 
 #### `propTypes`
 
-- `propTypes` object is for defining what are the component's properies (attributes?), This is a [React thing](https://facebook.github.io/react/docs/reusable-components.html). Basically to make sure this component will be used correctly: correct types and meet some validations.
+- `propTypes` object is for defining what are the component's properies (attributes?), This is a [React thing](https://facebook.github.io/react/docs/reusable-components.html). Basically to make sure this component will be used correctly: correct types and meet defined validations.
 - `Badge` component is created at https://github.com/armno/react-native-101/blob/master/App/Badge/Badge.js.
 - `React.PropTypes.object.isRequired` = the prop should be an object and it is required.
 - Putting `propTypes` definition as class properties (in `constructor()`) seems to work too. **BUT that's not what we want to do**.
@@ -217,10 +217,15 @@ class Nay extends Nom {
 
 - **No.**
 - See: http://wiki.ecmascript.org/doku.php?id=strawman:maximally_minimal_classes
-	- "Class declarations/expressions create a constructor function/prototype pair exactly as for function declarations."
+
+> Class declarations/expressions create a constructor function/prototype pair exactly as for function declarations.
+
 - ES6 Classes don't create actual classes: they create prototype chains for you. (Remember what people say about sugar syntax?)
 - So what should be in a class definition are **only prototype methods**, as far as I understand.
-- (From the same URL above) "Class properties and prototype data properties need be created outside the declaration.".
+- (From the same URL above)
+
+> Class properties and prototype data properties need be created outside the declaration.
+
 - So really the correct way to define `propTypes` is outside the `Nay` class definition.
 
 ```javascript
