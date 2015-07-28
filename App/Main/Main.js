@@ -2,6 +2,7 @@
 
 var React = require('react-native');
 var Dashboard = require('../Dashboard/Dashboard');
+var Badge = require('../Badge/Badge');
 
 var {
 	View,
