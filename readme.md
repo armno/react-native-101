@@ -6,6 +6,37 @@ Learning React Native in ES6. https://facebook.github.io/react-native/docs/tutor
 
 The code in tutorial uses both ES5 and ES6 syntax. I change them a bit to use ES6 as much as I can.
 
+## Running this app on simulartor
+
+```sh
+$ npm install
+$ open reactNativeOne.xcodeproj
+```
+
+## Running on device
+
+run
+
+```sh
+$ react-native bundle
+```
+
+Then open `AppDelegate.m` in Xcode, comment this line (~L34)
+
+```
+jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle"];
+```
+
+and uncomment this line (~L46)
+
+```
+jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+```
+
+Then run on the device connected
+
+-----
+
 ## random notes taken
 
 - The official docs uses [io.js](https://iojs.org) but it works with Node also. I was using node to follow the tutorial, no problems found.
