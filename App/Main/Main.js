@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react-native');
+var Dashboard = require('../Dashboard/Dashboard');
 
 var {
 	View,
@@ -65,7 +66,33 @@ class Main extends React.Component {
 		this.setState({
 			isLoading: true
 		});
-		console.log('submitted', this.state.username);
+
+		let username = this.state.username.trim();
+		let url = `https://api.github.com/users/${username}`;
+		fetch(url)
+			.then((res) => {
+
+				if (res.message === 'Not Found') {
+					this.setState({
+						error: 'User not found',
+						isLoading: false
+					});
+				} else {
+					this.props.navigator.push({
+						title: res.name || 'Select an Option',
+						component: Dashboard,
+						passProps: {
+							userInfo: res
+						}
+					});
+
+					this.setState({
+						isLoading: false,
+						error: false,
+						username: ''
+					})
+				}
+			});
 	}
 
 	render() {
