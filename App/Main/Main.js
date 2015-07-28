@@ -8,7 +8,8 @@ var {
 	Text,
 	StyleSheet,
 	TextInput,
-	TouchableHighlight
+	TouchableHighlight,
+	ActivityIndicatorIOS
 } = React;
 
 var styles = StyleSheet.create({
@@ -70,6 +71,7 @@ class Main extends React.Component {
 		let username = this.state.username.trim();
 		let url = `https://api.github.com/users/${username}`;
 		fetch(url)
+			.then((res) => res.json())
 			.then((res) => {
 
 				if (res.message === 'Not Found') {
@@ -96,6 +98,11 @@ class Main extends React.Component {
 	}
 
 	render() {
+
+		var showError = (
+			this.state.error ? <Text>{this.state.error}</Text> : <View></View>
+		);
+
 		return (
 			<View style={ styles.container }>
 				<Text style={ styles.text }>Search for a GitHub user</Text>
@@ -109,6 +116,12 @@ class Main extends React.Component {
 					underlayColor="white">
 						<Text style={styles.buttonText}>SEARCH</Text>
 				</TouchableHighlight>
+				<ActivityIndicatorIOS
+					animating={ this.state.isLoading }
+					color="#111"
+					size="large">
+				</ActivityIndicatorIOS>
+				{ showError }
 			</View>
 		)
 	}
