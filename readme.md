@@ -275,4 +275,4 @@ Nay.name = 'Yay';
 
 ### `WebView`
 
-- `WebView` actually has [a bunch of properties](https://facebook.github.io/react-native/docs/webview.html#content). But only `url` is really to get it up on the screen.
+- `WebView` actually has [a bunch of properties](https://facebook.github.io/react-native/docs/webview.html#content). But only `url` is really required to get it up on the screen.
