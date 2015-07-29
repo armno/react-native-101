@@ -1,11 +1,13 @@
 var React = require('react-native');
 var Seperator = require('../Separator/Separator');
+var MyWebView = require('../MyWebView/MyWebView');
 
 var {
 	View,
 	ScrollView,
 	Text,
-	StyleSheet
+	StyleSheet,
+	TouchableHighlight
 } = React;
 
 var styles = StyleSheet.create({
@@ -22,17 +24,32 @@ var styles = StyleSheet.create({
 });
 
 class Repositories extends React.Component {
+
+	goToRepo(url) {
+		console.log('going to: ', url);
+		this.props.navigator.push({
+			component: MyWebView,
+			title: 'Repo Homepage',
+			passProps: {
+				url: url
+			}
+		});
+	}
+
 	render() {
 		var list = this.props.repos.map((item, index) => {
 			return (
 				<View key={ index }>
-					<View style={ styles.rowContainer }>
+					<TouchableHighlight style={ styles.rowContainer }
+						onPress={ this.goToRepo.bind(this, item.html_url) }
+						underlayColor="transparent">
 						<Text style={ styles.rowContent }>{ item.name }</Text>
-					</View>
+					</TouchableHighlight>
 					<Seperator />
 				</View>
-			)
-		})
+			);
+		});
+
 		return (
 			<ScrollView style={ styles.container }>
 				{ list }
