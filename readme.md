@@ -270,3 +270,9 @@ Nay.name = 'Yay';
 - It's the same reason why we don't want to set a variable to a function's (class') prototype.
 - This is my _very-aha_ moment.
 - (Maybe we will [see it in ES7](https://esdiscuss.org/topic/es7-property-initializers) though)
+
+-----
+
+### `WebView`
+
+- `WebView` actually has [a bunch of properties](https://facebook.github.io/react-native/docs/webview.html#content). But only `url` is really to get it up on the screen.
