@@ -17,6 +17,11 @@ var styles = StyleSheet.create({
 	rowContainer: {
 		padding: 10
 	},
+	rowTitle: {
+		fontSize: 14,
+		fontWeight: 'bold',
+		color: '#bdc3c7'
+	},
 	rowContent: {
 		fontSize: 20,
 		color: '#34495e'
@@ -26,10 +31,9 @@ var styles = StyleSheet.create({
 class Repositories extends React.Component {
 
 	goToRepo(url) {
-		console.log('going to: ', url);
 		this.props.navigator.push({
 			component: MyWebView,
-			title: 'Repo Homepage',
+			title: 'On GitHub',
 			passProps: {
 				url: url
 			}
@@ -37,14 +41,18 @@ class Repositories extends React.Component {
 	}
 
 	render() {
-		var list = this.props.repos.map((item, index) => {
+		let list = this.props.repos.map((item, index) => {
+			let language = (item.language) ? item.language.toUpperCase() : '';
 			return (
-				<View key={ index }>
-					<TouchableHighlight style={ styles.rowContainer }
-						onPress={ this.goToRepo.bind(this, item.html_url) }
-						underlayColor="transparent">
-						<Text style={ styles.rowContent }>{ item.name }</Text>
-					</TouchableHighlight>
+				<View key={ index } style={ styles.container }>
+					<View style={ styles.rowContainer }>
+						<Text style={ styles.rowTitle }>{ language }</Text>
+						<TouchableHighlight
+							onPress={ this.goToRepo.bind(this, item.html_url) }
+							underlayColor="transparent">
+							<Text style={ styles.rowContent }>{ item.name }</Text>
+						</TouchableHighlight>
+					</View>
 					<Seperator />
 				</View>
 			);
