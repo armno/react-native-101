@@ -160,6 +160,7 @@ function (responseData) {
 - React uses fetch by default.
 - `componentDidMount()` method is where we put initial `fetchData()` method call in. `fetchData()` then stores retrieved data in component's state object.
 - `.then((res) => res.json())` to get actual response data in JSON format (first thing to do, maybe?)
+- `fetch` also supports other type of HTTP requests that `GET`. For example, `.fetch(url, { method: 'POST' })`
 
 ### `render()`
 
